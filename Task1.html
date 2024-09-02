@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TO-DO List</title>
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url(bg.jpg);
+            background-position: center center;
+            background-size: max(1700px, 100vw);
+        }
+        .container{
+            width: 400px;
+            height: auto; /* Adjusted to fit content */
+            padding: 30px;
+            border: 2px solid #e6b7eca1;
+            border-radius: 10px;
+        }
+        h1{
+            text-align: center;
+            margin: 36px;
+        }
+        .input-container{
+            display: flex;
+            justify-content: space-between;
+            margin: 25px;
+        }
+        .todo-input{
+            flex: 1;
+            outline: none;
+            padding: 10px 10px 10px 20px;
+            border: 2px solid #ccc; /* Added border color */
+            border-radius: 30px;
+            margin-right: 10px;
+        }
+        .add{
+            border: none;
+            outline: none;
+            font-size: 35px;
+            background-color: black;
+            cursor: pointer;
+            border-radius: 100%;
+            width: 40px; /* Adjusted for better alignment */
+            height: 40px;
+            color: white; /* Added text color */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .todo-container {
+            margin-top: 20px;
+        }
+        .todos {
+            list-style-type: none;
+            padding: 0;
+        }
+        .todo {
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .todo:last-child {
+            border-bottom: none;
+        }
+        .remove {
+            background-color: rgb(136, 61, 61);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 20px;
+            margin-left: 10px;
+        }
+        .todo-text {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 15px;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <div class="container">
+            <h1>To-Do List</h1>
+            <div class="input-container">
+                <input class="todo-input" type="text" placeholder="Add New Tasks.." id="todoInput">
+                <button class="add" id="addButton">+</button>
+            </div>
+            <div class="todo-container">
+                <ul class="todos" id="todosList"></ul>
+            </div>
+        </div>
+    </main>
+    <script>
+        // Get elements
+        const todoInput = document.getElementById('todoInput');
+        const addButton = document.getElementById('addButton');
+        const todosList = document.getElementById('todosList');
+
+        // Function to add todo
+        function addTodo() {
+            const todoText = todoInput.value.trim();
+            if (todoText) {
+                const todo = document.createElement('li');
+                todo.classList.add('todo');
+                todo.innerHTML = `
+                    <span class="todo-text">${todoText}</span>
+                    <button class="remove">Delete</button>
+                `;
+                todosList.appendChild(todo);
+                todoInput.value = ''; // Clear input field
+
+                // Add event listener to remove button
+                todo.querySelector('.remove').addEventListener('click', removeTodo);
+            }
+        }
+
+        // Function to remove todo
+        function removeTodo(e) {
+            e.target.parentNode.remove();
+        }
+
+        // Add event listener to add button
+        addButton.addEventListener('click', addTodo);
+
+        // Add event listener for enter key press
+        todoInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                addTodo();
+            }
+        });
+    </script>
+</body>
+
+</html>
